@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Local Storage</title>
+    <script type="text/javascript">
+        const localStorage = window.localStorage;
+
+        const initialize = () => {
+            if (localStorage) {
+                const count = localStorage.getItem("visitCount") || 0;
+                const newCount = parseInt(count) + 1;
+                localStorage.setItem("visitCount", newCount);
+            }
+            updateDOM();
+        };
+
+        const updateDOM = () => {
+            const count = localStorage.getItem("visitCount") || 0;
+            const storedPreferences = localStorage.getItem("preference");
+            const preference = storedPreferences
+                ? JSON.parse(storedPreferences)
+                : {};
+            document.getElementById("visitCount").innerHTML = `Visit count ${count}`;
+            document.body.style.background = preference.color || "white";
+        };
+
+        const setColorPreference = (color) => {
+            const preference = { color };
+            localStorage.setItem("preference", JSON.stringify(preference));
+            updateDOM();
+        };
+    </script>
+</head>
+<body onload="initialize()">
+    <button type="button" onclick="setColorPreference('red')">Red</button>
+    <button type="button" onclick="setColorPreference('green')">Green</button>
+    <button type="button" onclick="setColorPreference('blue')">Blue</button>
+    <div id="visitCount"></div>
+    <table border="1">
+        <tr>
+            <td><img src="kent.jpg" width="500" height="500"></td>
+            <td style="padding: 0 50px;">Kent Lewa</td>
+            <td style="padding: 0 50px;">SCT222-0143-2020</td>
+        </tr>
+    </table>
+</body>
+</html>
